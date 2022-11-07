@@ -1,6 +1,9 @@
+import SimpleInput from "./components/SimpleInput";
+
 function App() {
   return (
-    <div>
+    <div className="app">
+      <SimpleInput />
     </div>
   );
 }
