@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import useInput from "../hooks/useInput";
 import Input from "./Input";
 
 interface SimpleInputProps {
@@ -7,16 +8,26 @@ interface SimpleInputProps {
 
 const SimpleInput = (props: SimpleInputProps) => {
   // name
-  const [name, setName] = useState('');
-  const [nameTouched, setNameTouched] = useState(false)
-  const nameInvalid = name.trim() === ''
-  const nameError = (nameInvalid && nameTouched) ? "Name must not be empty" : undefined;
+  const [
+    name,
+    nameError,
+    nameInvalid,
+    setName,
+    setNameTouched
+  ] = useInput('', 'Name must not be empty', (e) => e.trim() === '')
 
   // email
-  const [email, setEmail] = useState('');
-  const [emailTouched, setEmailTouched] = useState(false)
-  const emailInvalid = !email.includes('@')
-  const emailError = (emailInvalid && emailTouched) ? "Email must contain an '@' caracter" : undefined;
+  // const [email, setEmail] = useState('');
+  // const [emailTouched, setEmailTouched] = useState(false)
+  // const emailInvalid = !email.includes('@')
+  // const emailError = (emailInvalid && emailTouched) ? "" : undefined;
+  const [
+    email,
+    emailError,
+    emailInvalid,
+    setEmail,
+    setEmailTouched
+  ] = useInput('', "Email must contain an '@' caracter", (e) => !e.includes('@'))
 
   // form validation
   const formIsValid = !nameInvalid && !emailInvalid;
