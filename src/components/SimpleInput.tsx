@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import useInput from "../hooks/useInput";
 import Input from "./Input";
 
@@ -18,10 +18,6 @@ const SimpleInput = (props: SimpleInputProps) => {
   ] = useInput('', 'Name must not be empty', (e) => e.trim() === '', (v) => v)
 
   // email
-  // const [email, setEmail] = useState('');
-  // const [emailTouched, setEmailTouched] = useState(false)
-  // const emailInvalid = !email.includes('@')
-  // const emailError = (emailInvalid && emailTouched) ? "" : undefined;
   const [
     email,
     emailError,
