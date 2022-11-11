@@ -12,9 +12,10 @@ const SimpleInput = (props: SimpleInputProps) => {
     name,
     nameError,
     nameInvalid,
-    setName,
-    setNameTouched
-  ] = useInput('', 'Name must not be empty', (e) => e.trim() === '')
+    nameChangeHandler,
+    nameBlurHandler,
+    resetName
+  ] = useInput('', 'Name must not be empty', (e) => e.trim() === '', (v) => v)
 
   // email
   // const [email, setEmail] = useState('');
@@ -25,9 +26,10 @@ const SimpleInput = (props: SimpleInputProps) => {
     email,
     emailError,
     emailInvalid,
-    setEmail,
-    setEmailTouched
-  ] = useInput('', "Email must contain an '@' caracter", (e) => !e.includes('@'))
+    emailChangeHandler,
+    emailBlurHandler,
+    resetEmail,
+  ] = useInput('', "Email must contain an '@' caracter", (e) => !e.includes('@'), (v) => v)
 
   // form validation
   const formIsValid = !nameInvalid && !emailInvalid;
@@ -39,11 +41,8 @@ const SimpleInput = (props: SimpleInputProps) => {
       return;
     }
 
-    setName('');
-    setNameTouched(false);
-
-    setEmail('');
-    setEmailTouched(false);
+    resetName();
+    resetEmail();
   }
   return (
     <form onSubmit={submit}>
@@ -53,8 +52,8 @@ const SimpleInput = (props: SimpleInputProps) => {
         type="text"
         value={name}
         error={nameError}
-        onChange={(e) => setName(e.target.value)}
-        onBlur={() => setNameTouched(true)}
+        onChange={nameChangeHandler}
+        onBlur={nameBlurHandler}
       />
       <Input
         id="email"
@@ -62,8 +61,8 @@ const SimpleInput = (props: SimpleInputProps) => {
         type="email"
         value={email}
         error={emailError}
-        onChange={(e) => setEmail(e.target.value)}
-        onBlur={() => setEmailTouched(true)}
+        onChange={emailChangeHandler}
+        onBlur={emailBlurHandler}
       />
       <div className="form-actions">
         <button disabled={!formIsValid}>Submit</button>
