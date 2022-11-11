@@ -1,41 +1,41 @@
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
-type Result<T> = [ 
-    T, 
-    string|undefined, 
-    boolean, 
-    ChangeEventHandler<HTMLInputElement>,
-    ()=> void,
-    ()=> void,
-]
+type Result<T> = {
+    value: T,
+    error: string | undefined,
+    invalid: boolean,
+    onChangeHandler: ChangeEventHandler<HTMLInputElement>,
+    onBlurHandler: () => void,
+    reset: () => void,
+}
 
 type TransformationFn<T> = (val: string) => T
 
 export default function useInput<T>(
-    initialVal: T, 
-    errorMessage: string, 
+    initialVal: T,
+    errorMessage: string,
     validator: (val: T) => boolean,
-    transform: TransformationFn<T> = (v)=> v as T
-) : Result<T> {
+    transform: TransformationFn<T> = (v) => v as T
+): Result<T> {
     const [value, setValue] = useState(initialVal);
     const [touched, setTouched] = useState(false);
 
     const invalid = validator(value);
     const error = (invalid && touched) ? errorMessage : undefined;
 
-    const touchHandler = ()=> setTouched(true)
-    const valueChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setValue(transform(e.target.value))
+    const onBlurHandler = () => setTouched(true)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setValue(transform(e.target.value))
     const reset = () => {
         setTouched(false);
         setValue(initialVal)
     }
 
-    return [
+    return {
         value,
         error,
         invalid,
-        valueChangeHandler,
-        touchHandler,
+        onChangeHandler,
+        onBlurHandler,
         reset
-    ]
+    }
 }
