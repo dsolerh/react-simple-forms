@@ -9,11 +9,13 @@ type Result<T> = [
     ()=> void,
 ]
 
+type TransformationFn<T> = (val: string) => T
+
 export default function useInput<T>(
     initialVal: T, 
     errorMessage: string, 
     validator: (val: T) => boolean,
-    transform: (val: string) => T
+    transform: TransformationFn<T> = (v)=> v as T
 ) : Result<T> {
     const [value, setValue] = useState(initialVal);
     const [touched, setTouched] = useState(false);

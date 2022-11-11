@@ -15,7 +15,7 @@ const SimpleInput = (props: SimpleInputProps) => {
     nameChangeHandler,
     nameBlurHandler,
     resetName
-  ] = useInput('', 'Name must not be empty', (e) => e.trim() === '', (v) => v)
+  ] = useInput('', 'Name must not be empty', (e) => e.trim() === '')
 
   // email
   const [
@@ -25,7 +25,7 @@ const SimpleInput = (props: SimpleInputProps) => {
     emailChangeHandler,
     emailBlurHandler,
     resetEmail,
-  ] = useInput('', "Email must contain an '@' caracter", (e) => !e.includes('@'), (v) => v)
+  ] = useInput('', "Email must contain an '@' caracter", (e) => !e.includes('@'))
 
   // form validation
   const formIsValid = !nameInvalid && !emailInvalid;
